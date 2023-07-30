@@ -1,31 +1,63 @@
 
 // This function makes sure the whole dom loads before the scripts run
 $(document).ready(function () {
-  var saveBtn = document.querySelector('.saveBtn');
-  let now = dayjs();
-  let currentHour = now.hour();
 
-  saveBtn.addEventListener('click', saveClick)
+  //variables I will need globally
+  const saveBtn = document.querySelector('.saveBtn');
 
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-
-  //handles the save click
-  function saveClick(){
-
+   //handles the save click
+   function saveClick(){
     //saving getting the hour to know when it was
     var hour = $(this).parent().attr('id').split("-")[1];
     //getting the text to know what was typed
     var text = $(this).siblings('.description').val();
-    
-    // save the text to local storage and the accurate hour marker
+      // save the text to local storage and the accurate hour marker
     localStorage.setItem(hour, text);
   }
+
+    //save button event listner
+    saveBtn.addEventListener('click', saveClick)
+
+  //update hours consistantly
+ //setting variables to get current time
+ function updateHours() {
+  var now = dayjs();
+  var currentHour = now.hour();
+  
+  // Iterate over each time-block div
+  $(".time-block").each(function() {
+    // Get the block hour
+    var blockHour = parseInt($(this).attr("id").split("-")[1]);
+
+    // make it so it is in army time,
+    var comparisonHour = blockHour;
+    if (blockHour < 6) {
+      comparisonHour = blockHour + 12;
+    }
+
+    // Check if the block is in the past, present, or future
+    if (comparisonHour < currentHour) {
+      // Time block is in the past
+      $(this).removeClass("future");
+      $(this).removeClass("present");
+      $(this).addClass("past");
+    } else if (comparisonHour === currentHour) {
+      // Time block is in the present
+      $(this).removeClass("past");
+      $(this).removeClass("future");
+      $(this).addClass("present");
+    } else {
+      // Time block is in the future
+      $(this).removeClass("past");
+      $(this).removeClass("present");
+      $(this).addClass("future");
+    }
+  });
+}
+})
+
+
+
 
 
   // TODO: Add code to apply the past, present, or future class to each time
@@ -39,4 +71,4 @@ $(document).ready(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
-});
+
