@@ -1,7 +1,12 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-$(function () {
+
+// This function makes sure the whole dom loads before the scripts run
+$(document).ready(function () {
+  var saveBtn = document.querySelector('.saveBtn');
+  let now = dayjs();
+  let currentHour = now.hour();
+
+  saveBtn.addEventListener('click', saveClick)
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -9,6 +14,20 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   //
+
+  //handles the save click
+  function saveClick(){
+
+    //saving getting the hour to know when it was
+    var hour = $(this).parent().attr('id').split("-")[1];
+    //getting the text to know what was typed
+    var text = $(this).siblings('.description').val();
+    
+    // save the text to local storage and the accurate hour marker
+    localStorage.setItem(hour, text);
+  }
+
+
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
