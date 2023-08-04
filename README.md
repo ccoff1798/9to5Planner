@@ -9,10 +9,10 @@ Click on any box to enter in a task for that time, make sure to hit the save ico
 ## Links
 
 Link to Repository
-https://github.com/ccoff1798/Password-Generation
+https://github.com/ccoff1798/9to5Planner
 
 Deployed Site
-https://ccoff1798.github.io/Password-Generation/
+https://ccoff1798.github.io/9to5Planner
 
 ## Screenshot
 
